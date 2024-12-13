@@ -121,7 +121,7 @@ db.createCollection("Awards",{
 db.createCollection("Producer",{
     validator:{
         $jsonSchema:{
-            required:['-id', 'pname'],
+            required:['_id', 'pname'],
             properties:{
                 _id:{
                     bsonType:'number'

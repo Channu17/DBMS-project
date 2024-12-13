@@ -1,0 +1,59 @@
+
+db.Movies.insertMany([
+    {'_id':1 ,'title':'The Dark Knight', 'release_year':2008, 'actor_id':[], 'director_id':, 'awards_id':601, 'language':'English', 'prodiction_id':701, 'budget':'$185 millions', 'runtime':153},
+    {'_id': ,'title':'', 'release_year':, 'actor_id':[], 'director_id':, 'awards_id':, 'language':'', 'prodiction_id':, 'budget':, 'runtime':, },
+
+])
+
+db.Directors.insertMany([
+    {'_id':201, 'dname':'Christopher Nolan',}
+])
+
+
+db.Producer.insertMany([
+    {'_id':701, 'pname':'Warner Bros. Pictures', 'est_year':1923, 'HQ':'Burbank, California, USA'},
+    {'_id':702, 'pname':'Universal Pictures', 'est_year':1912, 'HQ':'Universal City, California, USA'},
+    {'_id':703, 'pname':'Marvel Studios', 'est_year':1993, 'HQ':'Burbank, California, USA'},
+    {'_id':704, 'pname':'Paramount Pictures', 'est_year':1912, 'HQ':'Hollywood, California, USA'},
+    {'_id':705, 'pname':'Disney Studios', 'est_year':1923, 'HQ':'Burbank, California, USA'},
+    {'_id':706, 'pname':'20th Century Studios', 'est_year':1935, 'HQ':'Los Angeles, California, USA'},
+    {'_id':707, 'pname':'Yash Raj Films (YRF)', 'est_year':1970, 'HQ':'Mumbai, Maharashtra, India'},
+    {'_id':708, 'pname':'Dharma Productions', 'est_year':1976, 'HQ':'Mumbai, Maharashtra, India'},
+    {'_id':709, 'pname':'T-Series Films', 'est_year':1983, 'HQ':'Noida, Uttar Pradesh, India'},
+    {'_id':710, 'pname':'Red Chillies Entertainment', 'est_year':2003, 'HQ':'Mumbai, Maharashtra, India'},
+    {'_id':711, 'pname':'Excel Entertainment', 'est_year':1999, 'HQ':'Mumbai, Maharashtra, India'},
+    {'_id':712, 'pname':'Hombale Films', 'est_year':2014, 'HQ':'Bengaluru, Karnataka, India'},
+    {'_id':713, 'pname':'Jayanna Combines', 'est_year':2001, 'HQ':'Bengaluru, Karnataka, India'},
+    {'_id':714, 'pname':'Rockline Productions', 'est_year':1996, 'HQ':'Bengaluru, Karnataka, India'},
+    {'_id':715, 'pname':'Nadiadwala Grandson Entertainment', 'est_year':1952, 'HQ':'Mumbai, Maharashtra, India'}
+])
+
+
+db.Awards.insertMany([
+    {'_id':601, 'awname':'Academy Awards', 'start_year':1929},
+    {'_id':602, 'awname':'Golden Globe Awards', 'start_year':1944},
+    {'_id':603, 'awname':'BAFTA', 'start_year':1947},
+    {'_id':604, 'awname':'Critics Choice Movies Awards', 'start_year':1995},
+    {'_id':605, 'awname':'Filmfare Awards', 'start_year':1954},
+    {'_id':606, 'awname':'National Film Awards', 'start_year':1954},
+    {'_id':607, 'awname':'IIFA', 'start_year':2000},
+    {'_id':608, 'awname':'Screen Awards', 'start_year':1994},
+    {'_id':609, 'awname':'Zee Cine Awards', 'start_year':1998},
+])
+
+
+db.Genres.insertMany([
+    {'_id':301, 'gname':'Action'},
+    {'_id':302, 'gname':'Adventure'},
+    {'_id':303, 'gname':'Comedy'},
+    {'_id':304, 'gname':'Drama'},
+    {'_id':305, 'gname':'Fantasy'},
+    {'_id':306, 'gname':'Horror'},
+    {'_id':307, 'gname':'Romance'},
+    {'_id':308, 'gname':'sci-fi'},
+    {'_id':309, 'gname':'Super-Hero'},
+    {'_id':310, 'gname':'Mystery'},
+    {'_id':311, 'gname':'Thriller'},
+    {'_id':312, 'gname':'Animation'}
+])
+
