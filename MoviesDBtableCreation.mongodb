@@ -21,7 +21,7 @@ db.createCollection("Movies",{
 db.createCollection("Actors",{
     validator:{
         $jsonSchema:{
-            required:['_id',' aname'],
+            required:['_id','aname'],
             properties:{
                 actor_id:{
                     bsonType:'number'
@@ -44,22 +44,6 @@ db.createCollection("Directors",{
                     bsonType:'number'
                 },
                 dname:{
-                    bsonType:'string'
-                }
-            }
-        }
-    }
-})
-
-db.createCollection("Genres",{
-    validator:{
-        $jsonSchema:{
-            required:['_id','gname'],
-            properties:{
-                _id:{
-                    bsonType:'number'
-                },
-                gname:{
                     bsonType:'string'
                 }
             }
@@ -133,3 +117,6 @@ db.createCollection("Producer",{
         }
     }
 })
+
+
+
