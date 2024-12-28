@@ -12,6 +12,7 @@ async function fetchMovies() {
             card.classList.add('movie-card');
 
             const title = document.createElement('h2');
+            
             title.textContent = movie.title;
 
             const details = document.createElement('div');
