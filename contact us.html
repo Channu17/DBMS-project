@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: grey;
+            border-radius: 5px;
+        }
+
+        h2 {
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .fa-instagram
+        {
+            font-size: 50px;
+            color: orangered;
+            margin-right: 20px;
+        }
+        .fa-facebook
+        {
+            font-size: 50px;
+            color: blue;
+            margin-right: 20px;
+        }
+        .fa-google
+        {
+            font-size: 50px;
+            color: white;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign up to join the conversation</h2>
+        <p>Add your feedback by signing in or signing up.</p>
+
+        <div id="emailSignup" style="display: none;"> 
+            <input type="email" id="emailInput" placeholder="Enter your email" required>
+            <button id="subscribeBtn">Subscribe</button>
+        </div>
+
+        <button id="showEmailSignup">Sign Up With Email</button> 
+        <p>or</p>
+        
+            <a href="#" id="instagramLogin">
+                <i class="fa-brands fa-instagram"></i>Instagram
+            </a>
+            <a href="#" id="facebookLogin">
+                <i class="fa-brands fa-facebook"></i>facebook
+            </a>
+            <a href="#" id="googleLogin">
+                <i class="fa-brands fa-google"></i>google
+            </a>
+    
+    </div>
+
+    <script>
+        const showEmailSignupBtn = document.getElementById('showEmailSignup');
+        const emailSignupDiv = document.getElementById('emailSignup');
+        const subscribeBtn = document.getElementById('subscribeBtn');
+        const appleLogin = document.getElementById('instagramLogin');
+        const facebookLogin = document.getElementById('facebookLogin');
+        const googleLogin = document.getElementById('googleLogin');
+
+        showEmailSignupBtn.addEventListener('click', () => {
+            emailSignupDiv.style.display = 'block';
+            showEmailSignupBtn.style.display = 'none'; 
+        });
+
+        subscribeBtn.addEventListener('click', () => {
+            const email = document.getElementById('emailInput').value;
+            // Send email to server (example using fetch)
+            fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email: email })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Subscribed successfully!');
+                } else {
+                    alert('Error subscribing. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        });
+
+        appleLogin.addEventListener('click', () => {
+            // Handle Instagram login (e.g., redirect to instagram authentication service)
+            console.log("Instagram Login clicked"); 
+        });
+
+        facebookLogin.addEventListener('click', () => {
+            // Handle Facebook login 
+            console.log("Facebook Login clicked");
+        });
+
+        googleLogin.addEventListener('click', () => {
+            // Handle Google login 
+            console.log("Google Login clicked");
+        });
+    </script>
+
+</body>
+</html>
