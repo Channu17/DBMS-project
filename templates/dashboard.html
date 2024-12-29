@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Hub - {{ title }}</title>
+    <title>Movie Hub - Collections</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,14 +25,11 @@
             color: #ff5733;
         }
 
-        nav {
-            margin-top: 10px;
-        }
-
         nav ul {
             list-style-type: none;
             padding: 0;
             text-align: center;
+            margin: 10px 0 0;
         }
 
         nav ul li {
@@ -51,36 +48,71 @@
             text-decoration: underline;
         }
 
-        .search {
-            margin-top: 20px;
+        .content {
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
         }
 
-        .search input {
-            padding: 8px;
-            width: 60%;
-            border-radius: 5px;
-            border: none;
+        .dropdown, .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .dropdown select, .search-bar input {
+            padding: 10px;
             background-color: #222;
             color: #f5f5f5;
-            text-align: center;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
         }
 
-        .search button {
-            padding: 8px 15px;
+        .search-bar button {
+            padding: 10px;
             background-color: #ffcc00;
             color: #121212;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .search button:hover {
+        .search-bar button:hover {
             background-color: #e6b800;
         }
 
-        .content {
-            padding: 20px;
-            margin-top: 30px;
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            border: 1px solid #444;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #ff5733;
+            color: #fff;
+        }
+
+        .table td {
+            background-color: #222;
+            color: #f5f5f5;
+        }
+
+        .table td.no-data {
+            color: #ff5733;
+            text-align: center;
+            font-weight: bold;
+            background-color: #333;
+            padding: 15px;
         }
 
         footer {
@@ -96,12 +128,13 @@
             font-size: 14px;
             margin: 0;
         }
+        
     </style>
 </head>
 <body>
     <header>
         <div class="title">
-            <h1>Movie Hub</h1> 
+            <h1>Movie Hub</h1>
         </div>
         <nav>
             <ul>
@@ -111,14 +144,76 @@
                 <li><a href="{{ url_for('login') }}">LOGOUT</a></li>
             </ul>
         </nav>
-        <div class="search">
-            <input type="text" placeholder="Search for movie">
-            <button>Search</button>
-        </div>
     </header>
 
     <div class="content">
-        {% block content %}{% endblock %}
+        <form action="{{ url_for('dashboard') }}" method="POST">
+            <div class="dropdown">
+                <label for="collection">Select a Collection:</label>
+                <select id="collection" name="collection">
+                    <option value="">-- Choose Collection --</option>
+                    {% for col in collections %}
+                        <option value="{{ col }}" {% if col == collection %}selected{% endif %}>{{ col }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="search-bar">
+                {% if collection == 'Movies' %}
+                <label for="searchQuery">Search:</label>
+                <input 
+                    type="text" 
+                    id="searchQuery" 
+                    name="search_keyword" 
+                    placeholder="Enter movie title..." 
+                    value="{{ search_keyword }}">
+                {% endif %}
+                <button type="submit">Search</button>
+            </div>
+        </form>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <p style="color: #ffcc00; font-weight: bold;">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div id="table-container">
+            {% if collection %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            {% if columns %}
+                                {% for column in columns %}
+                                    <th>{{ column }}</th>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if rows %}
+                            {% for row in rows %}
+                            <tr>
+                                {% for cell in row %}
+                                <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="{{ columns|length }}" class="no-data">No data available</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p style="color: #ff5733; font-weight: bold; text-align: center;">Please select a collection to display data.</p>
+            {% endif %}
+        </div>
     </div>
 
     <footer>
