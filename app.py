@@ -48,7 +48,10 @@ def login():
 
         user = users_collection.find_one({"uname": username})
 
-        if user and user['password'] == password:
+        if username == 'admin' and password == 'admin':
+            flash("Login successful!", category='success')
+            return redirect(url_for('admin'))
+        elif user and user['password'] == password:
             session['user_id'] = str(user['_id'])
             session['username'] = user['uname']
             flash("Login successful!", category='success')
@@ -66,6 +69,12 @@ def dashboard():
     else:
         flash("You need to login first!")
         return redirect(url_for('login'))
+
+
+@app.route('/admin', methods=['GET', 'POST'])  
+def admin():
+    return render_template('admin.html')
+
 
 @app.route('/user/details', methods=['GET'])
 def user_details():
