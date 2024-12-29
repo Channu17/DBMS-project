@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        header {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #1e1e1e;
+            color: #ff5733;
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        #register-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            margin-top: 50px;
+        }
+
+        form {
+            text-align: center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 350px;
+        }
+
+        input, select {
+            margin: 10px 0;
+            padding: 8px;
+            width: 85%;
+            border-radius: 5px;
+            border: none;
+            background-color: #222;
+            color: #f5f5f5;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 85%;
+            background-color: #ffcc00;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+        }
+
+        #flash-message {
+            color: #ffcc00;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .success {
+            color: #2ecc71;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #f5f5f5;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>Movie Hub</header>
+    <div id="register-page">
+        <form id="register-form" method="POST" action="/register">
+            <h1>Register</h1>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div id="flash-message">
+                        {% for message in messages %}
+                            <div class="error">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <input type="text" id="username" name="username" placeholder="Username" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="date" id="dob" name="dob" required>
+            <select id="gender" name="gender" required>
+                <option value="" disabled selected>Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <div>
+        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </div>
+</body>
+</html>
