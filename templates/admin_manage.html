@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #1e1e1e;
+            color: #ff5733;
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        #admin-page {
+            margin-top: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        form {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        input, select {
+            margin: 10px 0;
+            padding: 8px;
+            width: calc(100% - 20px);
+            border-radius: 5px;
+            border: none;
+            background-color: #222;
+            color: #f5f5f5;
+            text-align: left;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            width: 100%;
+            background-color: #ffcc00;
+            color: #121212;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e6b800;
+        }
+
+        #flash-message {
+            color: #ffcc00;
+            text-align: center;
+            font-size: 18px;
+            margin-top: 15px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #f5f5f5;
+        }
+
+        a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .admin-btn {
+            background-color: #ff5733;
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        .admin-btn:hover {
+            background-color: #e84e2e;
+        }
+    </style>
+</head>
+<body>
+    <header>Admin Panel - Movie Hub</header>
+    <div id="admin-page">
+        <form action="/admin_manage" method="POST">
+            <h2>Manage Collections</h2>
+
+            <select name="collection" id="collection-select" required onchange="this.form.submit()">
+                <option value="">Select Collection</option>
+                <option value="Movies" {% if collection == 'Movies' %}selected{% endif %}>Movies</option>
+                <option value="Directors" {% if collection == 'Directors' %}selected{% endif %}>Directors</option>
+                <option value="Actors" {% if collection == 'Actors' %}selected{% endif %}>Actors</option>
+                <option value="Producer" {% if collection == 'Producer' %}selected{% endif %}>Producers</option>
+                <option value="Awards" {% if collection == 'Awards' %}selected{% endif %}>Awards</option>
+            </select>
+
+            {% if collection == 'Movies' %}
+                <input type="text" name="title" placeholder="Title" required>
+                <input type="text" name="release_year" placeholder="Release Year (integer)" required>
+                <input type="text" name="actors" placeholder="Actors (comma-separated)" required>
+                <input type="text" name="director" placeholder="Director" required>
+                <input type="text" name="awards" placeholder="Awards (comma-separated)" required>
+                <input type="text" name="language" placeholder="Language" required>
+                <input type="text" name="producer" placeholder="Producer" required>
+                <input type="text" name="budget" placeholder="Budget" required>
+                <input type="text" name="runtime" placeholder="Runtime (integer)" required>
+                <input type="text" name="genre" placeholder="Genre (comma-separated)" required>
+            {% elif collection == 'Directors' %}
+                <input type="text" name="director_name" placeholder="Director Name" required>
+                <input type="text" name="dob" placeholder="Date of Birth (integer)" required>
+                <input type="text" name="nationality" placeholder="Nationality" required>
+                <input type="text" name="gender" placeholder="Gender" required>
+                <input type="text" name="award" placeholder="Awards" required>
+                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
+            {% elif collection == 'Actors' %}
+                <input type="text" name="actor_name" placeholder="Actor Name" required>
+                <input type="text" name="dob" placeholder="Date of Birth (integer)" required>
+                <input type="text" name="nationality" placeholder="Nationality" required>
+                <input type="text" name="gender" placeholder="Gender" required>
+                <input type="text" name="award" placeholder="Awards" required>
+                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
+            {% elif collection == 'Producer' %}
+                <input type="text" name="company_name" placeholder="Company Name" required>
+                <input type="text" name="founded" placeholder="Founded Year (integer)" required>
+                <input type="text" name="headquarters" placeholder="Headquarters" required>
+            {% elif collection == 'Awards' %}
+                <input type="text" name="award_name" placeholder="Award Name" required>
+                <input type="text" name="year" placeholder="Start Year (integer)" required>
+            {% endif %}
+
+            {% if collection %}
+                <button type="submit">Submit</button>
+            {% endif %}
+        </form>
+
+        <div id="flash-message">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <p>Go back to <a href="{{ url_for('login') }}">Logout</a></p>
+
+        <!-- New button to go back to admin page -->
+        <a href="{{ url_for('admin') }}">
+            <button class="admin-btn">Go to Admin Page</button>
+        </a>
+    </div>
+</body>
+</html>

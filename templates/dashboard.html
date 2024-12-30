@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Hub - Collections</title>
+    <title>Dashboard - Movie Hub</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -128,13 +128,12 @@
             font-size: 14px;
             margin: 0;
         }
-        
     </style>
 </head>
 <body>
     <header>
         <div class="title">
-            <h1>Movie Hub</h1>
+            <h1>Dashboard - Movie Hub</h1>
         </div>
         <nav>
             <ul>
@@ -159,15 +158,13 @@
             </div>
 
             <div class="search-bar">
-                {% if collection == 'Movies' %}
-                <label for="searchQuery">Search:</label>
+                <label for="searchQuery">Search Keyword:</label>
                 <input 
                     type="text" 
                     id="searchQuery" 
                     name="search_keyword" 
-                    placeholder="Enter movie title..." 
+                    placeholder="Enter search keyword..." 
                     value="{{ search_keyword }}">
-                {% endif %}
                 <button type="submit">Search</button>
             </div>
         </form>
@@ -182,26 +179,24 @@
             {% endif %}
         {% endwith %}
 
-        <div id="table-container">
-            {% if collection %}
+        {% if collection %}
+            <div id="table-container">
                 <table class="table">
                     <thead>
                         <tr>
-                            {% if columns %}
-                                {% for column in columns %}
-                                    <th>{{ column }}</th>
-                                {% endfor %}
-                            {% endif %}
+                            {% for column in columns %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
                         {% if rows %}
                             {% for row in rows %}
-                            <tr>
-                                {% for cell in row %}
-                                <td>{{ cell }}</td>
-                                {% endfor %}
-                            </tr>
+                                <tr>
+                                    {% for cell in row %}
+                                        <td>{{ cell }}</td>
+                                    {% endfor %}
+                                </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
@@ -210,10 +205,10 @@
                         {% endif %}
                     </tbody>
                 </table>
-            {% else %}
-                <p style="color: #ff5733; font-weight: bold; text-align: center;">Please select a collection to display data.</p>
-            {% endif %}
-        </div>
+            </div>
+        {% else %}
+            <p style="text-align: center; color: #ffcc00;">Please select a collection to display data.</p>
+        {% endif %}
     </div>
 
     <footer>
