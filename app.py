@@ -232,27 +232,26 @@ def admin_update():
     collection_name = request.args.get('collection', None)
 
     if request.method == 'POST':
-        # Retrieve collection and entity name from the form
         collection_name = request.form.get('collection') or request.args.get('collection', None)
-        entity_name = request.form.get('entity_name')  # Updated to use search bar input
+        entity_name = request.form.get('entity_name') 
         update_data = {}
 
         if not collection_name or not entity_name:
             flash("Collection or entity name not provided!", category="error")
             return redirect(url_for('admin_update'))
 
-        # Valid collections
+    
         valid_collections = ['Movies', 'Directors', 'Actors', 'Producers', 'Awards']
 
         if collection_name not in valid_collections:
             flash("Invalid collection selected!", category="error")
             return redirect(url_for('admin_update'))
 
-        # Instantiate updater object
+
         updater = MongoDBUpdate()
 
         try:
-            # Update logic for Movies collection
+
             if collection_name == 'Movies':
                 form_data = {
                     'release_year': request.form.get('release_year'),
@@ -266,14 +265,12 @@ def admin_update():
                     'genre': request.form.get('genre'),
                 }
 
-                # Only include fields that have data
                 update_data = {
                     key: ([v.strip() for v in value.split(',')] if ',' in value else int(value) if key in ['release_year', 'runtime'] else float(value) if key == 'budget' else value)
                     for key, value in form_data.items() if value
                 }
                 result = updater.update_movie_details(entity_name, update_data)
 
-            # Update logic for Directors collection
             elif collection_name == 'Directors':
                 form_data = {
                     'DOB': request.form.get('dob'),
@@ -289,7 +286,6 @@ def admin_update():
                 }
                 result = updater.update_director_details(entity_name, update_data)
 
-            # Update logic for Actors collection
             elif collection_name == 'Actors':
                 form_data = {
                     'DOB': request.form.get('dob'),
@@ -305,7 +301,6 @@ def admin_update():
                 }
                 result = updater.update_actor_details(entity_name, update_data)
 
-            # Update logic for Producers collection
             elif collection_name == 'Producers':
                 form_data = {
                     'est_year': request.form.get('founded'),
@@ -318,7 +313,6 @@ def admin_update():
                 }
                 result = updater.update_producer_details(entity_name, update_data)
 
-            # Update logic for Awards collection
             elif collection_name == 'Awards':
                 form_data = {
                     'start_year': request.form.get('year'),
@@ -329,7 +323,6 @@ def admin_update():
                 }
                 result = updater.update_award_details(entity_name, update_data)
 
-            # Handle the result of the update operation
             if "error" not in result:
                 flash(f'{entity_name} updated successfully in {collection_name}!', 'success')
             else:
@@ -340,10 +333,8 @@ def admin_update():
         except Exception as e:
             flash(f"Error updating data: {str(e)}", category="error")
 
-        # Redirect to the admin update page with the current collection
         return redirect(url_for('admin_update', collection=collection_name))
 
-    # Render the update page template with the selected collection
     return render_template('admin_update.html', collection_name=collection_name)
 
 
