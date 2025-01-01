@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Manage - Movie Hub</title>
+    <title>Admin Update - Movie Hub</title>
     <style>
         body {
             background-color: #121212;
@@ -33,7 +33,7 @@
         }
 
         #admin-page {
-            margin-top: 100px; /* Adjusted to avoid header overlap */
+            margin-top: 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -52,6 +52,16 @@
         }
 
         input, select {
+            margin: 10px 0;
+            padding: 8px;
+            width: calc(100% - 20px);
+            border-radius: 5px;
+            border: none;
+            background-color: #222;
+            color: #f5f5f5;
+        }
+
+        input[type="search"] {
             margin: 10px 0;
             padding: 8px;
             width: calc(100% - 20px);
@@ -89,6 +99,7 @@
         h2, h3 {
             text-align: center;
         }
+
         .admin-page-btn {
             background-color: #ff5733;
             color: white;
@@ -108,12 +119,12 @@
     </style>
 </head>
 <body>
-    <header>Insert Data - Movie Hub</header>
+    <header>Update Data - Movie Hub</header>
     <div id="admin-page">
-    
-        <form method="GET" action="{{ url_for('admin_manage') }}">
+        <form method="GET" action="{{ url_for('admin_update') }}">
             <h2>Select Collection</h2>
             <select name="collection" id="collection-select" onchange="this.form.submit()" required>
+                <option value="" disabled selected>Select a collection</option>
                 <option value="Movies" {% if collection_name == 'Movies' %}selected{% endif %}>Movies</option>
                 <option value="Directors" {% if collection_name == 'Directors' %}selected{% endif %}>Directors</option>
                 <option value="Actors" {% if collection_name == 'Actors' %}selected{% endif %}>Actors</option>
@@ -121,46 +132,42 @@
                 <option value="Awards" {% if collection_name == 'Awards' %}selected{% endif %}>Awards</option>
             </select>
         </form>
-        <form action="{{ url_for('admin_manage', collection=collection_name) }}" method="POST">
-            {% if collection_name == 'Movies' %}
-                <h3>Add Movie</h3>
-                <input type="text" name="title" placeholder="Title" required>
-                <input type="number" name="release_year" placeholder="Release Year" required>
-                <input type="text" name="actors" placeholder="Actors (comma-separated)" required>
-                <input type="text" name="director" placeholder="Director" required>
-                <input type="text" name="awards" placeholder="Awards (comma-separated)" required>
-                <input type="text" name="language" placeholder="Language" required>
-                <input type="text" name="producer" placeholder="Producer" required>
-                <input type="text" name="budget" placeholder="Budget" required>
-                <input type="number" name="runtime" placeholder="Runtime (in minutes)" required>
-                <input type="text" name="genre" placeholder="Genre (comma-separated)" required>
-            {% elif collection_name == 'Directors' %}
-                <h3>Add Director</h3>
-                <input type="text" name="director_name" placeholder="Director Name" required>
-                <input type="number" name="dob" placeholder="Date of Birth (YYYY)" required>
-                <input type="text" name="nationality" placeholder="Nationality" required>
-                <input type="text" name="gender" placeholder="Gender" required>
-                <input type="text" name="award" placeholder="Award(s)" required>
-                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
-            {% elif collection_name == 'Actors' %}
-                <h3>Add Actor</h3>
-                <input type="text" name="actor_name" placeholder="Actor Name" required>
-                <input type="number" name="dob" placeholder="Date of Birth (YYYY)" required>
-                <input type="text" name="nationality" placeholder="Nationality" required>
-                <input type="text" name="gender" placeholder="Gender" required>
-                <input type="text" name="award" placeholder="Award(s)" required>
-                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
-            {% elif collection_name == 'Producers' %}
-                <h3>Add Producer</h3>
-                <input type="text" name="company_name" placeholder="Company Name" required>
-                <input type="number" name="founded" placeholder="Founded Year (YYYY)" required>
-                <input type="text" name="headquarters" placeholder="Headquarters" required>
-            {% elif collection_name == 'Awards' %}
-                <h3>Add Award</h3>
-                <input type="text" name="award_name" placeholder="Award Name" required>
-                <input type="number" name="year" placeholder="Start Year (YYYY)" required>
+        <form action="{{ url_for('admin_update', collection=collection_name) }}" method="POST">
+            {% if collection_name %}
+                <h3>Update {{ collection_name }}</h3>
+                <label for="entity_name">Search Entity</label>
+                <input type="search" name="entity_name" placeholder="Search for an entity (e.g., Actor Name)" required>
             {% endif %}
-            <button type="submit">Submit</button>
+
+            {% if collection_name == 'Movies' %}
+                <input type="number" name="release_year" placeholder="Release Year">
+                <input type="text" name="actors" placeholder="Actors (comma-separated)">
+                <input type="text" name="director" placeholder="Director">
+                <input type="text" name="awards" placeholder="Awards (comma-separated)">
+                <input type="text" name="language" placeholder="Language">
+                <input type="text" name="producer" placeholder="Producer">
+                <input type="text" name="budget" placeholder="Budget">
+                <input type="number" name="runtime" placeholder="Runtime (in minutes)">
+                <input type="text" name="genre" placeholder="Genre (comma-separated)">
+            {% elif collection_name == 'Directors' %}
+                <input type="number" name="dob" placeholder="Date of Birth (YYYY)">
+                <input type="text" name="nationality" placeholder="Nationality">
+                <input type="text" name="gender" placeholder="Gender">
+                <input type="text" name="award" placeholder="Award(s)">
+                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)">
+            {% elif collection_name == 'Actors' %}
+                <input type="number" name="dob" placeholder="Date of Birth (YYYY)">
+                <input type="text" name="nationality" placeholder="Nationality">
+                <input type="text" name="gender" placeholder="Gender">
+                <input type="text" name="award" placeholder="Award(s)">
+                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)">
+            {% elif collection_name == 'Producers' %}
+                <input type="number" name="founded" placeholder="Founded Year (YYYY)">
+                <input type="text" name="headquarters" placeholder="Headquarters">
+            {% elif collection_name == 'Awards' %}
+                <input type="number" name="year" placeholder="Start Year (YYYY)">
+            {% endif %}
+            <button type="submit">Update</button>
         </form>
         <div id="flash-message">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -174,5 +181,6 @@
             {% endwith %}
         </div>
         <a href="/admin" class="admin-page-btn">Go to Admin Page</a> 
+    </div>
 </body>
 </html>

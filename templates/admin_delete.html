@@ -89,6 +89,7 @@
         h2, h3 {
             text-align: center;
         }
+
         .admin-page-btn {
             background-color: #ff5733;
             color: white;
@@ -108,60 +109,33 @@
     </style>
 </head>
 <body>
-    <header>Insert Data - Movie Hub</header>
+    <header>Delete Data - Movie Hub</header>
     <div id="admin-page">
-    
-        <form method="GET" action="{{ url_for('admin_manage') }}">
+        <form action="{{ url_for('admin_delete') }}" method="POST">
             <h2>Select Collection</h2>
-            <select name="collection" id="collection-select" onchange="this.form.submit()" required>
+            <select name="collection" id="collection-select" required>
                 <option value="Movies" {% if collection_name == 'Movies' %}selected{% endif %}>Movies</option>
                 <option value="Directors" {% if collection_name == 'Directors' %}selected{% endif %}>Directors</option>
                 <option value="Actors" {% if collection_name == 'Actors' %}selected{% endif %}>Actors</option>
                 <option value="Producers" {% if collection_name == 'Producers' %}selected{% endif %}>Producers</option>
                 <option value="Awards" {% if collection_name == 'Awards' %}selected{% endif %}>Awards</option>
             </select>
-        </form>
-        <form action="{{ url_for('admin_manage', collection=collection_name) }}" method="POST">
+
+            <h3>Enter Name to Delete</h3>
             {% if collection_name == 'Movies' %}
-                <h3>Add Movie</h3>
-                <input type="text" name="title" placeholder="Title" required>
-                <input type="number" name="release_year" placeholder="Release Year" required>
-                <input type="text" name="actors" placeholder="Actors (comma-separated)" required>
-                <input type="text" name="director" placeholder="Director" required>
-                <input type="text" name="awards" placeholder="Awards (comma-separated)" required>
-                <input type="text" name="language" placeholder="Language" required>
-                <input type="text" name="producer" placeholder="Producer" required>
-                <input type="text" name="budget" placeholder="Budget" required>
-                <input type="number" name="runtime" placeholder="Runtime (in minutes)" required>
-                <input type="text" name="genre" placeholder="Genre (comma-separated)" required>
+                <input type="text" name="title" placeholder="Movie Title" required>
             {% elif collection_name == 'Directors' %}
-                <h3>Add Director</h3>
                 <input type="text" name="director_name" placeholder="Director Name" required>
-                <input type="number" name="dob" placeholder="Date of Birth (YYYY)" required>
-                <input type="text" name="nationality" placeholder="Nationality" required>
-                <input type="text" name="gender" placeholder="Gender" required>
-                <input type="text" name="award" placeholder="Award(s)" required>
-                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
             {% elif collection_name == 'Actors' %}
-                <h3>Add Actor</h3>
                 <input type="text" name="actor_name" placeholder="Actor Name" required>
-                <input type="number" name="dob" placeholder="Date of Birth (YYYY)" required>
-                <input type="text" name="nationality" placeholder="Nationality" required>
-                <input type="text" name="gender" placeholder="Gender" required>
-                <input type="text" name="award" placeholder="Award(s)" required>
-                <input type="text" name="notable_movies" placeholder="Notable Movies (comma-separated)" required>
             {% elif collection_name == 'Producers' %}
-                <h3>Add Producer</h3>
-                <input type="text" name="company_name" placeholder="Company Name" required>
-                <input type="number" name="founded" placeholder="Founded Year (YYYY)" required>
-                <input type="text" name="headquarters" placeholder="Headquarters" required>
+                <input type="text" name="company_name" placeholder="Producer Company Name" required>
             {% elif collection_name == 'Awards' %}
-                <h3>Add Award</h3>
                 <input type="text" name="award_name" placeholder="Award Name" required>
-                <input type="number" name="year" placeholder="Start Year (YYYY)" required>
             {% endif %}
-            <button type="submit">Submit</button>
+            <button type="submit">Delete</button>
         </form>
+
         <div id="flash-message">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -173,6 +147,8 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <a href="/admin" class="admin-page-btn">Go to Admin Page</a> 
+
+        <a href="/admin" class="admin-page-btn">Go to Admin Page</a>
+    </div>
 </body>
 </html>

@@ -105,15 +105,15 @@
         
         <div class="admin-buttons">
             <form method="POST" action="{{ url_for('admin_manage') }}">
-                <button type="submit">Insert Movies</button>
+                <button type="submit">Insert Data</button>
             </form>
 
-            <form method="POST" action="#">
-                <button type="submit">Delete Movies</button>
+            <form method="POST" action="{{ url_for('admin_delete') }}">
+                <button type="submit">Delete Data</button>
             </form>
 
-            <form method="POST" action="#">
-                <button type="submit">Update Movie Details</button>
+            <form method="POST" action="{{ url_for('admin_update') }}">
+                <button type="submit">Update Data</button>
             </form>
         </div>
 
